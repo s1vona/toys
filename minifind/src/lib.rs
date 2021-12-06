@@ -24,7 +24,7 @@ pub fn run(config: &Config) -> Result<(), Box<dyn Error>> {
     for entry in glob(&full_path).expect("Failed to read glob pattern") {
         match entry {
             Ok(path) => println!("{:?}", fs::canonicalize(path)?),
-            Err(e) => println!("{:?}", e),
+            Err(e) => return Err(Box::new(e)),
         }
     }
     Ok(())
