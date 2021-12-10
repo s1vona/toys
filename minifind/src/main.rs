@@ -1,10 +1,8 @@
 use minifind::Config;
 use std::{env, process};
 fn main() {
-    let args: Vec<String> = env::args().collect();
-
-    let config = Config::new(&args).unwrap_or_else(|err| {
-        eprintln!("Not enough arguments.\n{}", err);
+    let config = Config::new(env::args()).unwrap_or_else(|err| {
+        eprintln!("Arguments parsing error.\n{}", err);
         process::exit(1);
     });
 

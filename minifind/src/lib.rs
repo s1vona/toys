@@ -7,12 +7,19 @@ pub struct Config {
 }
 
 impl Config {
-    pub fn new(args: &[String]) -> Result<Config, &'static str> {
+    pub fn new(mut args: std::env::Args) -> Result<Config, &'static str> {
         if args.len() < 3 {
             return Err("Usage: minifind <path> <filename>");
         }
-        let root_path = args[1].clone();
-        let filename = args[2].clone();
+        args.next();
+        let root_path = match args.next() {
+            Some(s) => s,
+            None => return Err("Didn't have a path."),
+        };
+        let filename = match args.next() {
+            Some(s) => s,
+            None => return Err("Didn't have a filename."),
+        };
         Ok(Config {
             root_path,
             filename,
